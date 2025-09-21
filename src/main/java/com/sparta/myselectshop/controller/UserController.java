@@ -67,9 +67,12 @@ public class UserController {
         return new UserInfoDto(username, isAdmin);
     }
 
+    // 로그인 한 유저가 메인 페이지를 요청할 때 가지고있는 폴더를 반환
     @GetMapping("/user-folder")
     public String getUserInfo(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        model.addAttribute("folders" , folderService.getFolders(userDetails.getUser()));
+
+        model.addAttribute("folders", folderService.getFolders(userDetails.getUser()));
+
         return "index :: #fragment";
     }
 }
