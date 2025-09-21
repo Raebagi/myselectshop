@@ -4,7 +4,9 @@ import com.sparta.myselectshop.dto.FolderRequestDto;
 import com.sparta.myselectshop.dto.ProductMypriceRequestDto;
 import com.sparta.myselectshop.dto.ProductRequestDto;
 import com.sparta.myselectshop.dto.ProductResponseDto;
+import com.sparta.myselectshop.entity.Product;
 import com.sparta.myselectshop.security.UserDetailsImpl;
+import com.sparta.myselectshop.security.UserDetailsServiceImpl;
 import com.sparta.myselectshop.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
 
     @PostMapping("/products")
     public ProductResponseDto createProduct(@RequestBody ProductRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
@@ -51,5 +54,23 @@ public class ProductController {
         productService.addFodler(productId, folderId, userDetails.getUser());
     }
 
+    @GetMapping("/products/{folderId}/products")
+    public Page<ProductResponseDto> getProductsInFolder(
+            @PathVariable Long folderId,
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam("sortBy") String sortBy,
+            @RequestParam("isAsc") boolean isAsc,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return productService.getProductsInFolder(
+                folderId,
+                page - 1,
+                size,
+                sortBy,
+                isAsc,
+                userDetails.getUser()
+        );
+    }
 
-}
+    }
+
