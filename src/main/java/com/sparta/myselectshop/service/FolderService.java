@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FolderService {
 
-    private FolderRepository folderRepository;
+    private final FolderRepository folderRepository;
 
     // 로그인한 회원에 폴더들 등록
     public void addFolders(List<String> folderNames, User user) {

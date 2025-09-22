@@ -16,8 +16,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -80,7 +78,7 @@ public class ProductService {
         product.updateByItemDto(itemDto);
     }
 
-    public void addFodler(Long productId, Long folderId, User user) {
+    public void addFolder(Long productId, Long folderId, User user) {
 
         Product product = productRepository.findById(productId).orElseThrow(() ->
                 new NullPointerException( "해당 상품이 존재하지 않습니다."));
